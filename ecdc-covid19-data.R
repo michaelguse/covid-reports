@@ -9,6 +9,7 @@ library(gridExtra)
 
 #create the URL where the dataset is stored with automatic updates every day
 url <- paste("https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide-", format(Sys.time(), "%Y-%m-%d"), ".xlsx", sep = "")
+#url <- paste("https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide-2020-03-21.xlsx", sep = "")
 
 #download the dataset from the website to a local temporary file
 GET(url, authenticate(":", ":", type = "ntlm"), write_disk(tf <- tempfile(fileext = ".xlsx")))
