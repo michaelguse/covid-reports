@@ -45,6 +45,11 @@ covid19_all <- data %>%
 	summarize (sum_cases = sum(cases), sum_deaths = sum(deaths)) %>%
 	arrange(desc(date), desc(sum_cases), desc(sum_deaths))
 
+covid19_spread <- covid19 %>% 
+	spread(country_name, cases, fill=0) %>% 
+	select(-day, -month, -year, -deaths, -country_code) %>% 
+	arrange(desc(date))
+	
 # How many days to didplay for individual countries
 co_days <- 30
 
