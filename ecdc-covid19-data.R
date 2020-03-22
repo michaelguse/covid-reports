@@ -89,4 +89,5 @@ p8 <- ggplot(data = filter(covid19, country_code == "IT")[1:co_days,], mapping =
 	labs(title="IT Daily Deaths", x = "Date", y = "Daily Death Count") +
 	theme(plot.title = element_text(size=14, face="bold", margin = margin(10,0,10,0)))
 
+# Print all plots onto a single page and arrange them in 2 rows
 grid.arrange(p5, p1, p3, p7, p6, p2, p4, p8, nrow=2)
