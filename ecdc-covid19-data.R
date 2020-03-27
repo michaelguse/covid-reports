@@ -1,4 +1,5 @@
 #these libraries are necessary
+library(utils)
 library(readxl)
 library(httr)
 library(dplyr)
@@ -7,23 +8,11 @@ library(lubridate)
 library(ggplot2)
 library(gridExtra)
 
-#create the URL where the dataset is stored with automatic updates every day
-url <-
-  paste(
-    "https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide-",
-    format(Sys.time(), "%Y-%m-%d"),
-    ".xlsx",
-    sep = ""
-  )
-#url <- paste("https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide-2020-03-21.xlsx", sep = "")
-
-#download the dataset from the website to a local temporary file
-GET(url,
-    authenticate(":", ":", type = "ntlm"),
-    write_disk(tf <- tempfile(fileext = ".xlsx")))
+#download the dataset from the ECDC website to a local temporary file
+GET("https://opendata.ecdc.europa.eu/covid19/casedistribution/csv", authenticate(":", ":", type="ntlm"), write_disk(tf <- tempfile(fileext = ".csv")))
 
 #read the Dataset sheet into “R”
-data <- read_excel(tf)
+data <- read.csv(tf)
 
 # format of loaded dataset from ECDC
 #
@@ -31,26 +20,21 @@ data <- read_excel(tf)
 #   <dttm>      <dbl> <dbl>   <dbl> <dbl>  <dbl>   <chr>                                <chr>
 
 #rename columns for simplicity
-data <- data %>%
+data2 <- data %>%
   rename(
-    country_name = `Countries and territories`,
-    country_code = GeoId,
-    date = DateRep,
-    day = Day,
-    year = Year,
-    month = Month,
-    cases = Cases,
-    deaths = Deaths
+    country_name = `countriesAndTerritories`,
+    country_code = geoId,
+    date = dateRep
   ) %>%
-  mutate(date = as_date(date))
+  mutate(date = parse_date_time(date, orders = c("dmy"))) 
 
-covid19 <- data %>%
+covid19 <- data2 %>%
   group_by(date, country_name) %>%
   arrange(desc(date),
           desc(cases),
           desc(deaths))
 
-covid19_all <- data %>%
+covid19_all <- data2 %>%
   group_by(date) %>%
   summarize (sum_cases = sum(cases), sum_deaths = sum(deaths)) %>%
   arrange(desc(date), desc(sum_cases), desc(sum_deaths))
