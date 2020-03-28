@@ -20,8 +20,8 @@ ui <- fluidPage(
         sidebarPanel(
             numericInput("co_days",
                         "Number of Days:",
-                        min = 1,
-                        max = 200,
+                        min = 14,
+                        max = 114,
                         value = 28),
             selectInput("country1",
                         "1st Country",
@@ -31,7 +31,7 @@ ui <- fluidPage(
             selectInput("country2",
                         "2nd Country",
                         covid19$country_name,
-                        selected = "Germany",
+                        selected = "United_States_of_America",
                         multiple = FALSE)
         ),
 

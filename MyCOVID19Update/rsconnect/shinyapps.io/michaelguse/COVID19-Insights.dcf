@@ -1,0 +1,12 @@
+name: COVID19-Insights
+title: COVID19-Insights
+username:
+account: michaelguse
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2010802
+bundleId: 2935015
+url: https://michaelguse.shinyapps.io/COVID19-Insights/
+when: 1585369891.37072
+asMultiple: FALSE
+asStatic: FALSE
