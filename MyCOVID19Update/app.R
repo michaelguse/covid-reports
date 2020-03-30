@@ -68,8 +68,7 @@ server <- function(input, output) {
     
         # rename columns for simplicity
         data <- data %>%
-        rename(
-            country_name = `countriesAndTerritories`,
+        rename(country_name = `countriesAndTerritories`,
             country_code = geoId,
             date = dateRep
         ) %>%

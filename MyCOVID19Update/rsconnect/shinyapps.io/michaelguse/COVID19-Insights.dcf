@@ -5,8 +5,8 @@ account: michaelguse
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 2010802
-bundleId: 2935015
+bundleId: 2935039
 url: https://michaelguse.shinyapps.io/COVID19-Insights/
-when: 1585369891.37072
+when: 1585370480.225
 asMultiple: FALSE
 asStatic: FALSE

@@ -17,7 +17,8 @@ GET("https://opendata.ecdc.europa.eu/covid19/casedistribution/csv",
 data <- read.csv(tf)
 
 co_days = 28
-country = "Germany"
+country1 = "Germany"
+country2 = "United_States_of_America"
 
 # format of loaded dataset from ECDC
 # rename columns for simplicity
@@ -55,10 +56,22 @@ theme(plot.title = element_text(
 
 p2 <-
 ggplot(
-    data = filter(covid19, country_name == country)[1:co_days, ],
+    data = filter(covid19, country_name == country1)[1:co_days,],
     mapping = aes(x = date, y = cases)) +
 geom_bar(stat = "identity", color = "red", fill = "#ff9999") +
-labs(title = paste(country, "- Daily Cases"), x = "Date", y = "Daily Case Count") +
+labs(title = paste(country1, "- Daily Cases"), x = "Date", y = "Daily Case Count") +
+theme(plot.title = element_text(
+    size = 14,
+    face = "bold",
+    margin = margin(10, 0, 10, 0)
+))
+
+p2 <-
+ggplot(
+    data = filter(covid19, country_name == country2)[1:co_days,],
+    mapping = aes(x = date, y = cases)) +
+geom_bar(stat = "identity", color = "red", fill = "#ff9999") +
+labs(title = paste(country2, "- Daily Cases"), x = "Date", y = "Daily Case Count") +
 theme(plot.title = element_text(
     size = 14,
     face = "bold",
@@ -66,4 +79,4 @@ theme(plot.title = element_text(
 ))
 
 # Print all plots onto a single page and arrange them in 2 rows
-grid.arrange(p1, p2, nrow = 2)
+grid.arrange(p1, p2, p3, nrow = 3)
