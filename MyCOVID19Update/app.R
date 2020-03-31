@@ -91,7 +91,7 @@ server <- function(input, output) {
         options(repr.plot.width = 4, repr.plot.height = 4)
 
         p1 <-
-        ggplot(data = covid19_all, mapping = aes(x = date, y = sum_cases)) +
+        ggplot(data = covid19_all[1:co_days, ], mapping = aes(x = date, y = sum_cases)) +
         geom_bar(stat = "identity", color = "red", fill = "red") +
         labs(title = "Global - Daily Cases", x = "Date", y = "Daily Case Count") +
         theme(plot.title = element_text(
@@ -101,7 +101,7 @@ server <- function(input, output) {
         ))
 
         p2 <-
-        ggplot(data = covid19_all, mapping = aes(x = date, y = sum_deaths)) +
+        ggplot(data = covid19_all[1:co_days, ], mapping = aes(x = date, y = sum_deaths)) +
         geom_bar(stat = "identity", color = "black", fill = "black") +
         labs(title = "Global - Daily Deaths", x = "Date", y = "Daily Death Count") +
         theme(plot.title = element_text(

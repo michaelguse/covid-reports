@@ -16,7 +16,7 @@ GET("https://opendata.ecdc.europa.eu/covid19/casedistribution/csv",
 # read the Dataset sheet into “R”. The dataset will be called "data".
 data <- read.csv(tf)
 
-co_days = 100
+co_days = 60
 country1 = "United_States_of_America"
 country2 = "Germany"
 
