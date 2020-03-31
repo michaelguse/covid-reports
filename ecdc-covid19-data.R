@@ -16,9 +16,10 @@ GET("https://opendata.ecdc.europa.eu/covid19/casedistribution/csv",
 # read the Dataset sheet into “R”. The dataset will be called "data".
 data <- read.csv(tf)
 
-co_days = 28
-country1 = "Germany"
-country2 = "United_States_of_America"
+co_days = 100
+country1 = "United_States_of_America"
+country2 = "Germany"
+
 
 # format of loaded dataset from ECDC
 # rename columns for simplicity
@@ -41,11 +42,8 @@ group_by(date) %>%
 summarize (sum_cases = sum(cases), sum_deaths = sum(deaths)) %>%
 arrange(desc(date), desc(sum_cases), desc(sum_deaths))
 
-# How many days to didplay for individual countries
-co_days <- 28
-
 p1 <-
-ggplot(data = covid19_all, mapping = aes(x = date, y = sum_cases)) +
+ggplot(data = covid19_all[1:co_days,], mapping = aes(x = date, y = sum_cases)) +
 geom_bar(stat = "identity", color = "red", fill = "red") +
 labs(title = "Global - Daily Cases", x = "Date", y = "Daily Case Count") +
 theme(plot.title = element_text(
@@ -66,7 +64,7 @@ theme(plot.title = element_text(
     margin = margin(10, 0, 10, 0)
 ))
 
-p2 <-
+p3 <-
 ggplot(
     data = filter(covid19, country_name == country2)[1:co_days,],
     mapping = aes(x = date, y = cases)) +

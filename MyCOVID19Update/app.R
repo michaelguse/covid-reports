@@ -88,6 +88,8 @@ server <- function(input, output) {
         # How many days to didplay for individual countries
         co_days <- input$co_days
 
+        options(repr.plot.width = 4, repr.plot.height = 4)
+
         p1 <-
         ggplot(data = covid19_all, mapping = aes(x = date, y = sum_cases)) +
         geom_bar(stat = "identity", color = "red", fill = "red") +
@@ -99,6 +101,16 @@ server <- function(input, output) {
         ))
 
         p2 <-
+        ggplot(data = covid19_all, mapping = aes(x = date, y = sum_deaths)) +
+        geom_bar(stat = "identity", color = "black", fill = "black") +
+        labs(title = "Global - Daily Deaths", x = "Date", y = "Daily Death Count") +
+        theme(plot.title = element_text(
+            size = 14,
+            face = "bold",
+            margin = margin(10, 0, 10, 0)
+        ))
+
+        p3 <-
         ggplot(
             data = filter(covid19, country_name == input$country1)[1:co_days, ],
             mapping = aes(x = date, y = cases)) +
@@ -110,7 +122,19 @@ server <- function(input, output) {
             margin = margin(10, 0, 10, 0)
         ))
 
-        p3 <-
+        p4 <-
+        ggplot(
+            data = filter(covid19, country_name == input$country1)[1:co_days, ],
+            mapping = aes(x = date, y = deaths)) +
+        geom_bar(stat = "identity", color = "black", fill = "#999999") +
+        labs(title = paste(input$country1, "- Daily Deaths"), x = "Date", y = "Daily Death Count") +
+        theme(plot.title = element_text(
+            size = 14,
+            face = "bold",
+            margin = margin(10, 0, 10, 0)
+        ))
+
+        p5 <-
         ggplot(
             data = filter(covid19, country_name == input$country2)[1:co_days, ],
             mapping = aes(x = date, y = cases)) +
@@ -122,8 +146,20 @@ server <- function(input, output) {
             margin = margin(10, 0, 10, 0)
         ))
 
+        p6 <-
+        ggplot(
+            data = filter(covid19, country_name == input$country2)[1:co_days, ],
+            mapping = aes(x = date, y = deaths)) +
+        geom_bar(stat = "identity", color = "black", fill = "#999999") +
+        labs(title = paste(input$country2, "- Daily Deaths"), x = "Date", y = "Daily Death Count") +
+        theme(plot.title = element_text(
+            size = 14,
+            face = "bold",
+            margin = margin(10, 0, 10, 0)
+        ))
+
         # Print all plots onto a single page and arrange them in 2 rows
-        grid.arrange(p1, p2, p3, nrow = 3)
+        grid.arrange(p1, p2, p3, p4, p5, p6, ncol = 2)
     })
 }
 
